@@ -1,0 +1,76 @@
+<!doctype html>
+<html>
+<head>
+   <meta charset="UTF-8"/>
+   <title>CoderDojo (painting in a canvas)</title>
+   <link rel="stylesheet" type="text/css" href="css/styles.css">
+   
+   <script type="text/javascript" src="../lib/jquery-3.3.1.js" charset="UTF-8"></script>
+   <script>
+      var paintingContext;
+      
+      // optionalColor can be a color name (e.g. 'blue'), a RGB color value (e.g. '#FF0000' for red) or a RGBA value (e.g. 'FF000080' for a semitransparent red).
+      
+      function createFilledRectangle(left, top, width, height, optionalColor) {
+         paintingContext.fillStyle = optionalColor === undefined ? 'green' : optionalColor;
+         paintingContext.fillRect(left, top, width, height);
+      }
+      
+      function createLine(fromX, fromY, toX, toY, optionalColor) {
+         paintingContext.beginPath();
+         paintingContext.strokeStyle = optionalColor === undefined ? 'green' : optionalColor;
+         paintingContext.moveTo(fromX, fromY);
+         paintingContext.lineTo(toX, toY);
+         paintingContext.stroke();
+      }
+      
+      $(document).ready(function() {
+         paintingContext = document.getElementById('paintingArea').getContext("2d");
+         var paintingAreaWidth = $('#paintingArea').width();
+         var paintingAreaHeight = $('#paintingArea').height();
+         paintingContext.canvas.width = paintingAreaWidth;
+         paintingContext.canvas.height = paintingAreaHeight;
+         
+         var colors = ['red', 'green', 'blue', 'yellow', 'magenta', 'cyan', 'orange', 'brown', 'gray', 'white'];
+            
+         for (var i = 0; i < 10; i++) {
+            createFilledRectangle(20 + i * 10, paintingAreaHeight * 0.1 + (i * 10), paintingAreaWidth / 4, paintingAreaHeight / 2, colors[i] );
+         }
+         
+         var stepCount = 10;
+         var length    = paintingAreaHeight * 0.8;
+         var fromX     = paintingAreaWidth  / 2;
+         var fromY     = paintingAreaHeight * 0.1;
+         var toX       = fromX;
+         var toY       = fromY + length;
+         var increment = length / stepCount;
+         
+         for (var i = 0; i < stepCount; i++) {
+            createLine(fromX, fromY + (i * increment), toX + (i * increment), toY, colors[i]);
+         }
+      });
+   </script>
+</head>
+
+<body>
+   <div id="heading">
+      <h1>CoderDojo (painting in a canvas)</h1>
+   </div>
+   
+   <div id="content">
+      <h2>content</h2>
+      <p>This example demonstrates how draw in a canvas. A detailed description of the available commands is available <a href="https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D" target="_blank">here</a>.</p>
+      <p>Ideas for extensions:</p>
+      <ul>
+         <li>Create a javascript that draws a star.</li>
+         <li>Create a javascript that draws a circle by using many straight line segments.</li>
+      </ul>
+      <canvas id="paintingArea"></canvas>
+   </div>
+   
+   <div id="controls">
+      <h2>controls</h2>
+      <button onclick="window.alert('hello world');">hello world</button><br> 
+   </div>
+</body>
+</html>

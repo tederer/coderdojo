@@ -1,0 +1,95 @@
+<!doctype html>
+<html>
+<head>
+   <meta charset="UTF-8"/>
+   <title>CoderDojo (bitmap vs vector graphics)</title>
+   <link rel="stylesheet" type="text/css" href="css/styles.css">
+   
+   <script type="text/javascript" src="../lib/jquery-3.3.1.js" charset="UTF-8"></script>
+   <script>
+      $(document).ready(function() {
+      });
+   </script>
+</head>
+
+<body>
+   <div id="heading">
+      <h1>CoderDojo (bitmap vs vector graphics)</h1>
+   </div>
+   
+   <div id="content">
+      <p>This example tries to explain the difference between bitmap and vector graphics/images.</p>
+      <p>Before we start to have a look at the two formats we have to check how our display/screen works. To display something on your screen, your graphics card expects to get
+         a bitmap. This map is a raster of rectangles each having its own color. This little rectangles are called pixels. The following image (fig1) shows such a bitmap of circle.</p>
+      
+      <center>      
+         <img src="images/circle.jpg">
+         <figcaption>fig1: bitmap of a circle</figcaption>
+      </center>
+      
+      <h2>bitmaps</h2>
+      
+      <p>A bitmap graphic/image stores the data as a raster of pixels. File formats using bitmaps are for example: bmp, jpg, gif. Because every pixel gets stored, the resulting file
+      can get big even if you changed only a few pixels. To avoid using more disc space than needed many file formats (e.g. jpg) support data compression to make the resulting files 
+      smaller. Not every data compression works without losing quality! The higher the compression the higher the loss of quality of your image will be.</p>
+      
+      <h3>Advantages of bitmaps</h3>
+      <ul>
+         <li>no conversion needed to display it - its already a bitmap</li>
+      </ul>
+      
+      <h3>Disadvantages of bitmaps</h3>
+      <ul>
+         <li>the resulting files can get really big</li>
+         <li>bad quality of the image when you zoom in</li>
+      </ul>
+      
+      <h2>vector graphics</h2>
+      
+      <p>A vector graphic/image is a text file containing the description of the image that should get drawn. A commonly used file format for vector graphics is SVG (scalable vector graphic).
+      The image (fig2) below shows a circle drawn as a SVG. Beside the circle you can see the SVG code that is necessary to produce the circle.</p>
+      
+      <table align="center">
+         <tr>
+            <td>
+               <center>      
+                  <img src="images/circle.svg">
+               </center>
+            </td>
+            <td>
+               <pre><code>
+&lt;?xml version="1.0" standalone="no"?&gt;
+&lt;svg width="100px" height="100px" version="1.1" xmlns="http://www.w3.org/2000/svg"&gt;
+     &lt;circle cy="50px" cx="50px" r="45px" stroke-width="2px" stroke="black" fill="none"/&gt;
+&lt;/svg&gt;               
+               </code></pre>
+            </td>
+         </tr>
+         <tr>
+            <td colspan="2">
+               <figcaption>fig2: a circle as vector graphic and its code</figcaption>
+            </td>
+         </tr>
+      </table>
+      
+      <h3>Advantages of SVGs</h3>
+      <ul>
+         <li>scaling without loss of quality</li>
+         <li>The style of a SVG can be changed by using CSS (cascading style sheets)</li>
+         <li>a SVG image can get created by a javascript on the fly</li>
+      </ul>
+
+      <h2>Ideas for extensions:</h2>
+      <ul>
+         <li>Create a copy of the SVG file of the cirle (images/circle.svg) and add addtional objects (e.g. rectangles, lines, ...). The available SVG elements are documented here:
+            <ul>
+               <li><a href="https://www.w3schools.com/graphics/" target="_blank">HTML Graphics</a></li>
+               <li><a href="https://developer.mozilla.org/de/docs/Web/SVG/Element" target="_blank">MDN web docs</a></li>
+            </ul>
+         </li>
+         <li><a href="https://inkscape.org" target="_blank">Inkscape</a> is a free SVG editor. There is also a portable version available that does not require admin rights to install it. 
+         Download it and use it to convert a bitmap to a SVG.</li>
+      </ul>      
+   </div>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!doctype html>
+<html>
+<head>
+   <meta charset="UTF-8"/>
+   <title>CoderDojo (reading input values)</title>
+   <link rel="stylesheet" type="text/css" href="css/styles.css">
+   
+   <script type="text/javascript" src="../lib/jquery-3.3.1.js" charset="UTF-8"></script>
+   <script>
+      myTextAreaContent='';
+      
+      function appendText(text) {
+         myTextAreaContent += text + '\n';
+         $('#myTextArea').val(myTextAreaContent);
+      };
+      
+      function addTShirtSize() {
+         var size = $('#tShirtSize:checked').val();
+         appendText('t-shirt size = ' + size);
+      };
+      
+      function addFoodOrder() {
+         var checkedFood = $('#foodOrder:checked');
+         var order = '';
+         for (var index = 0; index < checkedFood.length; index++) {
+            var food = checkedFood[index].value;
+            if (order.length === 0) {
+               order = food;
+            } else {
+               order += ', ' + food;
+            }
+         }
+         
+         if (order.length > 0) {
+            appendText('food order = ' + order);
+         }
+      };
+      
+      function addFreeText() {
+         var freeText = $('#freeTextInput').val();
+         if (freeText.length > 0) {
+            appendText('free text input = ' + freeText);
+         }
+      };
+      
+      $(document).ready(function() {
+         $('#myTextArea').val('');
+      });
+   </script>
+</head>
+
+<body>
+   <div id="heading">
+      <h1>CoderDojo (reading input values)</h1>
+   </div>
+   
+   <div id="content">
+      <h2>content</h2>
+      <p>This example demonstrates how to read values from input elements.</p>
+      <p>Ideas for extensions:</p>
+      <ul>
+         <li>Create a calculator consisting of buttons for "0"-"9", "+", "-" and "=". Clicking on a button that is not "=", should append its value to a text field.</li>
+         <li>Create a function that evaluates the expression when you click on the "=" button. Check the <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/eval" target="_blank">eval() function</a>. 
+         This function opens a door for hackers if you do not check the text that gets processed by eval(). Why?</li>
+      </ul>
+      
+      <table align="center">
+         <tr>
+            <td>
+               <p>T-Shirt size:</p>
+               <input type="radio" id="tShirtSize" name="shirtSizes" value="small">small
+               <input type="radio" id="tShirtSize" name="shirtSizes" value="medium">medium
+               <input type="radio" id="tShirtSize" name="shirtSizes" value="large">large
+               <button onclick="addTShirtSize()">add T-Shirt size</button> 
+            </td>
+            <td>
+               <p>Food order:</p>
+               <input type="checkbox" id="foodOrder" value="pizza">pizza
+               <input type="checkbox" id="foodOrder" value="chilli">chilli
+               <input type="checkbox" id="foodOrder" value="sushi">sushi
+               <button onclick="addFoodOrder()">order food</button>
+            </td>
+         </tr>
+         <tr>
+            <td colspan="2">
+               free text input: <input type="text" id="freeTextInput">
+               <button onclick="addFreeText()">add free text</button>
+            </td>
+         </tr>
+      </table>
+      <br>
+      
+      <textarea id="myTextArea"></textarea>
+   </div>
+</body>
+</html>

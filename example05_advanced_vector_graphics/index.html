@@ -1,0 +1,110 @@
+<!doctype html>
+<html>
+<head>
+   <meta charset="UTF-8"/>
+   <title>CoderDojo (advanced vector graphics)</title>
+   <link rel="stylesheet" type="text/css" href="css/styles.css">
+   
+   <script type="text/javascript" src="../lib/jquery-3.3.1.js" charset="UTF-8"></script>
+   <script>
+      var updatesPerSecond = 25;
+      var updateIntervalInMillis = 1000 / updatesPerSecond;
+      var nextUpdateTimeInMillis = Date.now();
+      var vectorGraphicAnimation;
+      var vectorGraphicGraph;
+      var percent = 0;
+      var stepSize = 2;
+      var increment = stepSize;
+      
+      function setSvgContent(canvas, content) {
+         canvas.html(content);
+      };
+      
+      function update() {
+         var radius = 10 + 30 * percent / 100;
+         setSvgContent(vectorGraphicAnimation, '<circle cx="50" cy="50" r="' + radius + '" stroke="green" stroke-width="4" fill="yellow" />');
+         percent += increment;
+         if (percent === 100) {
+            increment = -stepSize;
+         } else if (percent === 0) {
+            increment = stepSize;
+         }
+      };
+      
+      function startPeriodicTask() {
+         var nowInMillis = Date.now();
+         var millisToSleep = Math.max(0, nextUpdateTimeInMillis - nowInMillis);
+         
+         setTimeout(function() {
+            update();
+            nextUpdateTimeInMillis += updateIntervalInMillis;
+            startPeriodicTask();
+         }, millisToSleep);
+      };
+      
+      function repaintChart() {
+         var colors = ['green', 'gray', 'blue', 'orange', 'black'];
+         var percentages = [20, 80, 10, 40, 30];
+         var svgContent= '';
+         
+         for (var index = 0; index < percentages.length; index++) {
+            var barCount = percentages.length;
+            var canvasWidth = 400;
+            var canvasHeight = 200;
+            var barWidth = 20;
+            var spaceBetweenBars = 5;
+            var widthOfAllBars = barCount * barWidth + (barCount - 1) * spaceBetweenBars;
+            var xOffset = (canvasWidth - widthOfAllBars) / 2;
+            var x = xOffset + index * (barWidth + spaceBetweenBars);
+            var maxBarHeight = canvasHeight * 0.8;
+            var barHeight = maxBarHeight * percentages[index] / 100;
+            var yOffset = (canvasHeight - maxBarHeight) / 2;
+            var y = 10 + maxBarHeight - barHeight;
+            
+            svgContent += '<rect x="' + x + '" y="' + y + '" width="' + barWidth + '" height="' + barHeight + '" stroke="none" stroke-width="4" fill="' + colors[index] + '" />';
+         }
+         setSvgContent(vectorGraphicGraph, svgContent);
+      };
+      
+      $(document).ready(function() {
+         vectorGraphicAnimation = $('#vectorGraphicAnimation');
+         vectorGraphicGraph = $('#vectorGraphicGraph');
+         startPeriodicTask();
+         repaintChart();
+      });
+   </script>
+</head>
+
+<body>
+   <div id="heading">
+      <h1>CoderDojo (advanced vector graphics)</h1>
+   </div>
+   
+   <div id="content">
+      <p>This example demonstrates how to create a vector graphic/image on the fly by using javascript. Typical usecases are graphs, statistics and animations.</p>
+      <center>
+         <svg width="100" height="100" id="vectorGraphicAnimation"/>
+         <figcaption>fig1: animated vector graphic</figcaption>
+      </center>
+      
+      <p>The image (fig2) below showsa simple chart.</p>
+      <center>
+         <svg width="400" height="200" id="vectorGraphicGraph"/>
+         <figcaption>fig2: a vector graphic used to display a chart</figcaption>
+      </center>
+      
+      <h2>Ideas for extensions:</h2>
+      <ul>
+         <li>Change the animation in fig1 in a way that the circle moves around instead of changing its size.</li>
+         <li>Add some input fields that influence the height of the bars in fig2.</li>
+         <li>Try to implement a graph plotter that takes a function and draws/plots its graph.</li>
+      </ul>  
+
+      <h2>References:</h2>
+      <ul>
+         <li><a href="https://www.w3schools.com/graphics/" target="_blank">HTML Graphics</a></li>
+         <li><a href="https://developer.mozilla.org/de/docs/Web/SVG/Element" target="_blank">MDN web docs (SVG elements)</a></li>
+      </ul>
+   </div>
+</body>
+</html>

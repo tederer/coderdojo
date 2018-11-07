@@ -1,0 +1,66 @@
+<!doctype html>
+<html>
+<head>
+   <meta charset="UTF-8"/>
+   <title>CoderDojo (absolute positioning)</title>
+   <link rel="stylesheet" type="text/css" href="css/styles.css">
+   
+   <script type="text/javascript" src="../lib/jquery-3.3.1.js" charset="UTF-8"></script>
+   <script>
+      var box;
+      var playground;
+      
+      var moveBoxTo = function moveBoxTo(left, top) {
+         box.css( {left: left, top: top} );
+      };
+      
+      var moveBoxToPlaygroundCenter = function moveBoxToPlaygroundCenter() {
+         playgroundPosition = playground.position();
+         playgroundCenter = {
+            x: playgroundPosition.left + playground.width()  / 2,
+            y: playgroundPosition.top  + playground.height() / 2
+         };
+         
+         var left = playgroundCenter.x - box.width()  / 2;
+         var top  = playgroundCenter.y - box.height() / 2;
+         moveBoxTo(left, top);
+      };
+      
+      $(document).ready(function() {
+         box = $('#box');
+         playground = $('#content');
+         moveBoxToPlaygroundCenter();
+      });
+   </script>
+</head>
+
+<body>
+   <div id="heading">
+      <h1>CoderDojo (absolute positioning)</h1>
+   </div>
+   
+   <div id="content">
+      <h2>content</h2>
+      <p>This example demonstrates how an element, in our case the blue box, can be positioned anywhere by using Javascript in combination with CSS (Cascading Style Sheets). 
+      Use the buttons in the control area to move the blue box and have a look at the code how this works.</p>
+      <p>Ideas for extensions:</p>
+      <ul>
+         <li>Replace the blue box by an image and move it.</li>
+         <li>Create 4 buttons (up, down, left and right) to move the blue box (or image) up, down, left or right by a predefined distance (e.g. 10 pixels).</li>
+         <li>Extend the code to move the blue box along a predefined path. To do this the "setTimeout" function can be used. Searching the internet for "javascript setTimeout" 
+         will tell you how this can be used.</li>
+      </ul>
+   </div>
+   
+   <div id="controls">
+      <h2>controls</h2>
+      <button onclick="moveBoxTo(100,100);">moveBoxTo(100, 100)</button><br> 
+      <button onclick="moveBoxTo(200,100);">moveBoxTo(200, 100)</button><br> 
+      <button onclick="moveBoxTo(100,200);">moveBoxTo(100, 200)</button><br> 
+      <button onclick="moveBoxTo(300,400);">moveBoxTo(300, 400)</button><br> 
+      <button onclick="moveBoxToPlaygroundCenter();">moveBoxToPlaygroundCenter()</button> 
+   </div>
+   
+   <div id="box"></div>
+</body>
+</html>
