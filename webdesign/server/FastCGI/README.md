@@ -7,6 +7,9 @@ allowing a server to handle more web page requests per same amount of time.
 
 To try FastCGI the webserver NGINX (https://www.nginx.com) can be used.
 
+Please note that the purpose of this FastCGI (FCGI) listener is to understand/learn how FCGI works.
+Its implementation is not yet finished. Still open is the handling of multiple connections.
+Therefore this code should not be used in production!
 
 # references:
 

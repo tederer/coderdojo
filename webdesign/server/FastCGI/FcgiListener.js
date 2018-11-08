@@ -1,5 +1,5 @@
 // Please note that the purpose of this FastCGI (FCGI) listener is to understand/learn how FCGI works.
-// Its implementation is not yet finished yet. Still open is the handling of multiple connections.
+// Its implementation is not yet finished. Still open is the handling of multiple connections.
 // Therefore this code should not be used in production!
 
 const net = require('net');
