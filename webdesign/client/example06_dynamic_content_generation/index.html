@@ -1,0 +1,105 @@
+<!doctype html>
+<html>
+<head>
+   <meta charset="UTF-8"/>
+   <title>CoderDojo (dynamic content generation)</title>
+   <link rel="stylesheet" type="text/css" href="css/styles.css">
+   
+   <script type="text/javascript" src="../lib/jquery-3.3.1.js" charset="UTF-8"></script>
+   <script>
+      var folderContent = {
+         type: 'folder',
+         name: 'root',
+         content: [
+            { 
+               type: 'folder', 
+               name: 'videos',
+               content: [
+                  { 
+                     type: 'folder', 
+                     name: 'private',
+                     content: [
+                        { type: 'file', name: 'mum.wmf' },
+                        { type: 'file', name: 'dad.wmf' }
+                     ]
+                  },
+                  { type: 'file', name: 'birthday_party.wmf' },
+                  { type: 'file', name: 'robots.wmf' },
+                  { type: 'file', name: 'zumba.wmf' }
+               ]
+            },
+            { 
+               type: 'folder', 
+               name: 'music',
+               content: [
+                  { type: 'file', name: 'party_mix.wav' },
+                  { type: 'file', name: 'film_music.wav' }
+               ]
+            }
+         ]
+      };
+      
+      function calculateMaxDepth(node, depth) {
+         if (node.type === "file") {
+            return depth + 1;
+         } else {
+            var maxDepth = depth;
+            node.content.forEach(function(cont) {
+               maxDepth = Math.max( maxDepth, calculateMaxDepth(cont, depth + 1));
+            });
+            return maxDepth;
+         }
+      }
+      
+      function createDynamicContent() {
+         var htmlContent = '<table>';
+         var columnCount = calculateMaxDepth(folderContent, 0);
+         
+         var addTableRow = function addTableRow(filepath) {
+            htmlContent += '<tr>';
+            htmlContent += '<td>' + filepath + '</td>';
+            htmlContent += '</tr>';
+         };
+         
+         var traverseTree = function traverseTree(node, path) {
+            if (node.type === "file") {
+               addTableRow(path + node.name);
+            }
+               
+            if (node.type === 'folder') {
+               for (var index = 0; index < node.content.length; index++) {
+                  traverseTree(node.content[index], path + node.name + '/');
+               };
+            }
+         };
+         
+         traverseTree(folderContent, '');
+         
+         htmlContent += '</table>';
+         $('#content #dynamicContent').html(htmlContent);
+      }
+      
+      $(document).ready(function() {
+         createDynamicContent();
+      });
+   </script>
+</head>
+
+<body>
+   <div id="heading">
+      <h1>CoderDojo (dynamic content generation)</h1>
+   </div>
+   
+   <div id="content">
+      <p>This example demonstrates how to generate web content by using Javascript.</p>
+      
+      <div id="dynamicContent"></div>
+      
+      <h2>Ideas for extensions:</h2>
+      <ul>
+         <li>Store the folderContent in a file (e.g. folderContent.json), download it by using the <a href="https://api.jquery.com/jquery.get/" target="_blank">get()-method of jQuery</a> 
+         and use the downloaded data to generate the list of files.</li>
+      </ul>  
+   </div>
+</body>
+</html>
